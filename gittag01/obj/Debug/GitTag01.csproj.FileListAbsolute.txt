@@ -1,0 +1,5 @@
+D:\Project\TEST_TASK\gittag01\GitTag01\bin\Debug\GitTag01.exe.config
+D:\Project\TEST_TASK\gittag01\GitTag01\bin\Debug\GitTag01.exe
+D:\Project\TEST_TASK\gittag01\GitTag01\bin\Debug\GitTag01.pdb
+D:\Project\TEST_TASK\gittag01\GitTag01\obj\Debug\GitTag01.exe
+D:\Project\TEST_TASK\gittag01\GitTag01\obj\Debug\GitTag01.pdb
