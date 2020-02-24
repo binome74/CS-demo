@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace AsyncCaller
 {
@@ -33,20 +34,23 @@ namespace AsyncCaller
         /// Вызов переданного конструктору делегата с ожиданием его завершения waitForMillis мс. Если выполнение делегата займет больше waitForMillis мс, то метод вернет управление.
         /// Независимо от выбранного варианта обработки завершения вызова делегата необходимо всегда использовать метод EndInvoke.
         /// </summary>
-        /// <param name="waitForMillis">Время ожидания в миллисекундах</param>
+        /// <param name="millisecondsTimeout">Время ожидания в миллисекундах</param>
         /// <param name="sender">Первый параметр для BeginInvoke</param>
         /// <param name="e">Второй параметр для BeginInvoke</param>
         /// <param name="callback">Третий параметр для BeginInvoke</param>
         /// <param name="object">Четвертый параметр для BeginInvoke</param>
         /// <returns>Признак завершения асинхронного вызова</returns>
 #nullable enable
-        public bool Invoke(int waitForMillis, object? sender, EventArgs e, AsyncCallback callback, object @object)
+        public bool Invoke(int millisecondsTimeout, object? sender, EventArgs e, AsyncCallback callback, object @object)
 #nullable disable
         {
+            // Проверим переданный аргумент
+            if (millisecondsTimeout < 0 && millisecondsTimeout != Timeout.Infinite)
+                throw new ArgumentOutOfRangeException("waitForMillis");
             // Запустим асинхронное выполнение
             asyncResult = h.BeginInvoke(sender, e, callback, @object);
             // Синхронно подождем 
-            asyncResult.AsyncWaitHandle.WaitOne(waitForMillis);
+            asyncResult.AsyncWaitHandle.WaitOne(millisecondsTimeout);
             // Вернем признак завершения
             return asyncResult.IsCompleted;
         }
